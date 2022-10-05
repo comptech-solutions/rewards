@@ -9,6 +9,9 @@ import java.time.LocalDate;
 @Entity
 public class PurchaseRecord {
 
+    public static final int ZERO = 0;
+    public static final int ONE_POINT_MIN = 50;
+    public static final int TWO_POINT_MIN = 100;
     @Id
     @GeneratedValue
     private Long id;
@@ -38,6 +41,18 @@ public class PurchaseRecord {
 
     public Long getCustomerId() {
         return customerId;
+    }
+
+    public int calculatePoints() {
+        int totalAsInt = total.intValue();
+        if (totalAsInt > ONE_POINT_MIN) {
+            if (totalAsInt > TWO_POINT_MIN) {
+                return ( (totalAsInt - TWO_POINT_MIN) * 2 ) + ONE_POINT_MIN;
+            }
+            return (totalAsInt - ONE_POINT_MIN);
+        }
+
+        return ZERO;
     }
 
 }
