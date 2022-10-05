@@ -10,4 +10,5 @@ public class RewardsApplication {
 		SpringApplication.run(RewardsApplication.class, args);
 	}
 
+
 }

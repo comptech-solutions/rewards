@@ -39,4 +39,5 @@ public class PurchaseRecord {
     public Long getCustomerId() {
         return customerId;
     }
+
 }
