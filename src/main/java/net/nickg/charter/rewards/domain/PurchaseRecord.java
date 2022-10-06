@@ -15,14 +15,14 @@ public class PurchaseRecord {
     @Id
     @GeneratedValue
     private Long id;
-    private BigDecimal total;
+    private BigDecimal amount;
     private LocalDate date;
     private Long customerId;
 
     public PurchaseRecord() {}
 
-    public PurchaseRecord(BigDecimal total, LocalDate date, Long customerId) {
-        this.total = total;
+    public PurchaseRecord(BigDecimal amount, LocalDate date, Long customerId) {
+        this.amount = amount;
         this.date = date;
         this.customerId = customerId;
     }
@@ -31,8 +31,8 @@ public class PurchaseRecord {
         return id;
     }
 
-    public BigDecimal getTotal() {
-        return total;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
     public LocalDate getDate() {
@@ -44,7 +44,7 @@ public class PurchaseRecord {
     }
 
     public int calculatePoints() {
-        int totalAsInt = total.intValue();
+        int totalAsInt = amount.intValue();
         if (totalAsInt > ONE_POINT_MIN) {
             if (totalAsInt > TWO_POINT_MIN) {
                 return ( (totalAsInt - TWO_POINT_MIN) * 2 ) + ONE_POINT_MIN;
@@ -55,4 +55,13 @@ public class PurchaseRecord {
         return ZERO;
     }
 
+    @Override
+    public String toString() {
+        return "PurchaseRecord{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", date=" + date +
+                ", customerId=" + customerId +
+                '}';
+    }
 }

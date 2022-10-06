@@ -1,16 +1,14 @@
 package net.nickg.charter.rewards.domain;
 
-import org.springframework.data.util.Pair;
+import net.nickg.charter.rewards.service.PurchaseRecordService;
 
 import java.time.Month;
 import java.util.HashMap;
-import java.util.IntSummaryStatistics;
-import java.util.List;
 import java.util.Map;
 
 public class CustomerSummary {
     private Long customerId;
-    private Map<Month, Integer> monthlyTotals;
+    private Map<Month, Integer> monthlyTotals = new HashMap<>();
 
     public CustomerSummary(Long customerId, Map<Month, Integer> monthlyTotals) {
         this.customerId = customerId;
@@ -31,5 +29,24 @@ public class CustomerSummary {
                 .stream()
                 .mapToInt(Integer::intValue)
                 .sum();
+    }
+
+    public void addToTotals(Month month, Integer points) {
+        System.out.println("addToTotals() with month=" + month + ", points=" + points);
+        monthlyTotals.merge(month, points, (k, v) -> v + points);
+        System.out.println("monthlyTotals for " + month + " is now: " + monthlyTotals.get(month));
+    }
+
+    public void processPurchaseRecord(PurchaseRecord purchaseRecord) {
+        var month = purchaseRecord.getDate().getMonth();
+        var points = purchaseRecord.calculatePoints();
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerSummary{" +
+                "customerId=" + customerId +
+                ", monthlyTotals=" + monthlyTotals +
+                '}';
     }
 }
